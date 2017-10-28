@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/xmlwise.iml" filepath="$PROJECT_DIR$/.idea/xmlwise.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xmlwise.iml" filepath="$PROJECT_DIR$/xmlwise.iml" />
     </modules>
   </component>
 </project>
