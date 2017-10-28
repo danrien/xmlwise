@@ -81,13 +81,11 @@ public final class Plist
 	 */
 	public static String toXml(Object data)
 	{
-		StringBuilder builder = new StringBuilder(
-				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+		return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
 				"<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" " +
 				"\"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n" +
-				"<plist version=\"1.0\">");
-		builder.append(PLIST.objectToXml(data).toXml());
-		return builder.append("</plist>").toString();
+				"<plist version=\"1.0\">" + PLIST.objectToXml(data).toXml() +
+				"</plist>";
 	}
 
 	/**
@@ -207,7 +205,7 @@ public final class Plist
 	 * Map or List.
 	 * @return an <tt>XmlElement</tt> containing the serialized version of the object.
 	 */
-	@SuppressWarnings({"EnumSwitchStatementWhichMissesCases", "SwitchStatementWithoutDefaultBranch"})
+	@SuppressWarnings({"EnumSwitchStatementWhichMissesCases", "SwitchStatementWithoutDefaultBranch", "unchecked"})
 	XmlElement objectToXml(Object o)
 	{
 		ElementType type = m_simpleTypes.get(o.getClass());
@@ -231,7 +229,7 @@ public final class Plist
 		}
 		if (o instanceof Map)
 		{
-			return toXmlDict((Map) o);
+			return toXmlDict((Map<String, Object>) o);
 		}
 		else if (o instanceof List)
 		{
@@ -290,24 +288,9 @@ public final class Plist
 		if (element.size() != 1) throw new XmlParseException("Expected single 'dict' child element.");
 		element.getUnique("dict");
 
-		return (Map<String, Object>)parseElement(element.getUnique("dict"));
-	}
-
-	/**
-	 * Parses a (non-top) xml element.
-	 *
-	 * @param element the element to parse.
-	 * @return the resulting object.
-	 * @throws XmlParseException if there was some error in the xml.
-	 */
-	private Object parseElement(XmlElement element) throws XmlParseException
-	{
-		try
-		{
-			return parseElementRaw(element);
-		}
-		catch (Exception e)
-		{
+		try {
+			return parseDict(element.getUnique("dict"));
+		} catch (Exception e) {
 			throw new XmlParseException("Failed to parse: " + element.toXml(), e);
 		}
 	}
