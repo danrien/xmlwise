@@ -1,8 +1,10 @@
 package xmlwise;
 
-import org.dom4j.Document;
-import org.dom4j.io.SAXReader;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.File;
@@ -42,12 +44,20 @@ public class Xmlwise
 	 */
 	public static Document loadDocument(File file, boolean validate, boolean loadExternalDTD) throws IOException, XmlParseException
 	{
-		try	{
-			final SAXReader saxReader = new SAXReader();
-			saxReader.setIncludeExternalDTDDeclarations(loadExternalDTD);
-			saxReader.setValidation(validate);
-			return saxReader.read(file);
-		} catch (Exception e)
+		try
+		{
+			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+//			documentBuilderFactory.setAttribute("http://apache.org/xml/features/nonvalidating/load-external-dtd",
+//			                                    loadExternalDTD);
+			documentBuilderFactory.setValidating(validate);
+			DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
+			return builder.parse(file);
+		}
+		catch (IOException e)
+		{
+			throw e;
+		}
+		catch (Exception e)
 		{
 			throw new XmlParseException(e);
 		}
@@ -66,10 +76,12 @@ public class Xmlwise
 	{
 		try
 		{
-			final SAXReader saxReader = new SAXReader();
-			saxReader.setIncludeExternalDTDDeclarations(loadExternalDTD);
-			saxReader.setValidation(validate);
-			return saxReader.read(new StringReader(xml));
+			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+//			documentBuilderFactory.setAttribute("http://apache.org/xml/features/nonvalidating/load-external-dtd",
+//			                                    loadExternalDTD);
+			documentBuilderFactory.setValidating(validate);
+			DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
+			return builder.parse(new InputSource(new StringReader(xml)));
 		}
 		catch (Exception e)
 		{
@@ -146,7 +158,7 @@ public class Xmlwise
 	 */
 	public static XmlElement loadXml(File file) throws XmlParseException, IOException
 	{
-		return new XmlElement(loadDocument(file).getRootElement());
+		return new XmlElement(loadDocument(file).getDocumentElement());
 	}
 
 	/**
@@ -171,7 +183,7 @@ public class Xmlwise
 	 */
 	public static XmlElement createXml(String xml) throws XmlParseException
 	{
-		return new XmlElement(createDocument(xml).getRootElement());
+		return new XmlElement(createDocument(xml).getDocumentElement());
 	}
 
 }

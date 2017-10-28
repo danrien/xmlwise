@@ -15,7 +15,7 @@ public class XmlElementTest extends TestCase
 	protected void setUp() throws Exception
 	{
 		m_xmlElement = new XmlElement(Xmlwise.createDocument(
-				"<x ab='cd&gt;' ef='12'><dfe x='34.1'/><ag>1</ag><ag/><jo test='yes'>hej&lt;</jo></x>").getRootElement());
+				"<x ab='cd&gt;' ef='12'><dfe x='34.1'/><ag>1</ag><ag/><jo test='yes'>hej&lt;</jo></x>").getDocumentElement());
 	}
 
 	public void testCreateXml()

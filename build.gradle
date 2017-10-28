@@ -23,7 +23,6 @@ targetCompatibility = JavaVersion.VERSION_1_6
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'org.dom4j:dom4j:2.1.0'
     testCompile 'junit:junit:4.12'
 }
 

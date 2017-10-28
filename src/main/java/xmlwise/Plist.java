@@ -53,7 +53,7 @@ public final class Plist
 	/**
 	 * All element types possible for a plist.
 	 */
-	private enum ElementType
+	private static enum ElementType
 	{
 		INTEGER,
 		STRING,
