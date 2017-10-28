@@ -1,10 +1,10 @@
 package xmlwise;
 
+import org.dom4j.Attribute;
+import org.dom4j.Element;
 
-import org.w3c.dom.Element;
-
-import org.w3c.dom.NamedNodeMap;
-
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -35,12 +35,12 @@ public class XmlElementAttributes extends HashMap<String, String>
 	 */
 	public XmlElementAttributes(Element element)
 	{
-		super(element.getAttributes().getLength());
-		NamedNodeMap map = element.getAttributes();
-		int attributesLength = map.getLength();
-		for (int i = 0; i < attributesLength; i++)
+		super(element.attributeCount());
+
+		for (Iterator<Attribute> it = element.attributeIterator(); it.hasNext();)
 		{
-			put(map.item(i).getNodeName(), map.item(i).getNodeValue());
+			final Attribute attribute = it.next();
+			put(attribute.getName(), attribute.getValue());
 		}
 	}
 

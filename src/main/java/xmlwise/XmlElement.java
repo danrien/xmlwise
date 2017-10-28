@@ -1,10 +1,11 @@
 package xmlwise;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
+import org.dom4j.Element;
+import org.dom4j.Node;
 
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * A simplified XML Element that only has an attribute map, a list of sub elements a text value and
@@ -29,19 +30,18 @@ public class XmlElement extends LinkedList<XmlElement>
 	public XmlElement(Element element)
 	{
 		m_attributes = new XmlElementAttributes(element);
-		NodeList children = element.getChildNodes();
-		m_name = element.getNodeName();
+		m_name = element.getQualifiedName();
 		StringBuilder textValue = new StringBuilder();
-		for (int i = 0; i < children.getLength(); i++)
+		for (Iterator<Node> it = element.nodeIterator(); it.hasNext();)
 		{
-			Node node = children.item(i);
-			if (node.getNodeType() == Node.ELEMENT_NODE)
+			Node node = it.next();
+			if (node.getNodeType() == Element.ELEMENT_NODE)
 			{
-				add(new XmlElement((Element) node));
+				add(new XmlElement((Element)node));
 			}
-			if (node.getNodeType() == Node.TEXT_NODE)
+			if (node.getNodeType() == Element.TEXT_NODE)
 			{
-				textValue.append(node.getNodeValue());
+				textValue.append(node.getStringValue());
 			}
 		}
 		m_value = textValue.toString();
