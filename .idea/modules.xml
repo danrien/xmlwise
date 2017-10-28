@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/library.iml" group="library" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/sandbox-xmlwise.iml" filepath="$PROJECT_DIR$/.idea/modules/sandbox-xmlwise.iml" />
       <module fileurl="file://$PROJECT_DIR$/src/xmlwise.iml" filepath="$PROJECT_DIR$/src/xmlwise.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/xmlwise_main.iml" filepath="$PROJECT_DIR$/.idea/modules/xmlwise_main.iml" group="xmlwise" />
